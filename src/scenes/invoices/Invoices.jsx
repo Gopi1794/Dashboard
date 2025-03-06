@@ -34,9 +34,11 @@ const Invoices = () => {
       field: "cost",
       headerName: "Cost",
       flex: 1,
-      renderCell: (params) => {
-        <Typography>${params.row.cost}</Typography>;
-      },
+      renderCell: (params) => (
+        <Typography color={colors.greenAccent[400]}>
+          ${params.row.cost}
+        </Typography>
+      ),
     },
     {
       field: "date",
