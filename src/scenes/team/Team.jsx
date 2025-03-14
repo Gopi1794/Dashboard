@@ -43,13 +43,14 @@ const Team = () => {
             m="0 auto"
             p="5px"
             display="flex"
+            padding="10px"
             justifyContent="center"
             backgroundColor={
               access === "admin"
-                ? colors.greenAccent[600]
+                ? colors.modeColor[600]
                 : access === "manager"
-                ? colors.greenAccent[700]
-                : colors.greenAccent[700]
+                ? colors.modeColor[500]
+                : colors.modeColor[500]
             }
             borderRadius="4px"
           >
@@ -57,7 +58,7 @@ const Team = () => {
             {access === "manager" && <SecurityOutlinedIcon />}
             {access === "user" && <LockOpenOutlinedIcon />}
 
-            <Typography color={colors.greenAccent[100]} sx={{ ml: "5px" }}>
+            <Typography color="#ffffff" sx={{ ml: "5px" }}>
               {access}
             </Typography>
           </Box>
@@ -76,14 +77,21 @@ const Team = () => {
           "& .MuiDataGrid-root": {
             border: "none",
           },
+
+          "& .name-column--cell": {
+            color: colors.greenAccent[300],
+          },
           "& .MuiDataGrid-cell": {
             borderBottom: "none",
+            display: "flex",
+            textAlign: "center",
+            padding: "10px",
           },
           "& .name-column--cell": {
             color: colors.greenAccent[200],
           },
           "& .MuiDataGrid-columnHeader": {
-            backgroundColor: colors.greenAccent[300],
+            backgroundColor: colors.modeColor[600],
             borderBottom: "none",
           },
           "& .MuiDataGrid-virtualScroller": {
@@ -91,7 +99,7 @@ const Team = () => {
           },
           "& .MuiDataGrid-footerContainer": {
             borderTop: "none",
-            backgroundColor: colors.blueAccent[700],
+            backgroundColor: colors.modeColor[600],
           },
           "& .MuiCheckbox-root": {
             color: `${colors.greenAccent[200]} !important`,

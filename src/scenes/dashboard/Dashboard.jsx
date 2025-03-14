@@ -20,7 +20,7 @@ const Dashboard = () => {
   const colors = tokens(theme.palette.mode);
 
   return (
-    <Box m="20px 0 20px 0">
+    <Box m="30px 0 30px 0">
       {/* HEADER */}
       <Box
         display="flex"
@@ -58,7 +58,7 @@ const Dashboard = () => {
       <Box
         display="grid"
         gridTemplateColumns="repeat(12, 1fr)"
-        gridAutoRows="140px"
+        gridAutoRows="130px"
         gap="20px"
       >
         {/* BOX ONE */}
@@ -428,7 +428,7 @@ const Dashboard = () => {
                 : "linear-gradient(315deg,rgba(100, 98,98,0.2) 64%, rgba(100, 98,98,0.2) 100%)",
           }}
         >
-          <Box p="20px 30px">
+          <Box p="0px 20px 0 0px">
             <Typography
               variant="h4"
               fontWeight="600"
@@ -456,8 +456,8 @@ const Dashboard = () => {
                 : "linear-gradient(315deg,rgba(100, 98,98,0.2) 64%, rgba(100, 98,98,0.2) 100%)",
           }}
         >
-          <Box p="20px 30px">
-            <Typography variant="h4" fontWeight="600" sx={{ p: "30px" }}>
+          <Box p="0px 20px 0 0px">
+            <Typography variant="h4" fontWeight="600" sx={{ p: "20px" }}>
               Geography Based Traffic
             </Typography>
             <Box height="200px">

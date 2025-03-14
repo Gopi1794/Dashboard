@@ -57,7 +57,7 @@ const MiniDrawer = styled(Drawer, {
   shouldForwardProp: (prop) => prop !== "open",
 })(({ theme, open }) => {
   return {
-    width: open ? drawerWidth : 70,
+    width: open ? drawerWidth : 90,
     flexShrink: 0,
     whiteSpace: "nowrap",
     boxSizing: "border-box",
