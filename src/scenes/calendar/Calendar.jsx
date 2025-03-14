@@ -1,4 +1,5 @@
 import { useState } from "react";
+import multimonthPlugin from "@fullcalendar/multimonth";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
@@ -28,15 +29,16 @@ const Calendar = () => {
 
   const handleDateClick = async (selected) => {
     const { value: title } = await createAlert.fire({
-      title: "Ingrese el título del evento",
+      title: "Enter the title of the event",
       input: "text",
-      inputPlaceholder: "Escribe aquí...",
+      inputPlaceholder: "Here...",
       showCancelButton: true,
-      confirmButtonColor: "#4cccac",
-      cancelButtonColor: "#e2726e",
+      confirmButtonColor: colors.greenAccent[500],
+      cancelButtonColor: "#cccc",
+      color: "#ffffff",
       confirmButtonText: "Agregar",
       cancelButtonText: "Cancelar",
-      background: "rgb(255, 255, 255)",
+      background: "rgb(27, 24, 24)",
     });
     const calendarApi = selected.view.calendar;
     calendarApi.unselect();
@@ -56,11 +58,12 @@ const Calendar = () => {
     const result = await deleteAlert.fire({
       title: `Are you sure you want to delete the event "${selected.event.title}"?`,
       showCancelButton: true,
-      confirmButtonColor: "#4cccac",
-      cancelButtonColor: "#e2726e",
+      confirmButtonColor: colors.greenAccent[500],
+      cancelButtonColor: "#cccc",
+      color: "#ffffff",
       confirmButtonText: "Yes, delete it",
       cancelButtonText: "Cancel",
-      background: "rgb(255, 255, 255)",
+      background: "rgb(136, 136, 136)",
     });
 
     if (result.isConfirmed) {
@@ -68,9 +71,9 @@ const Calendar = () => {
     }
   };
   return (
-    <Box m="20px" width="90%">
+    <Box p="40px" width="95%" borderRadius="25px">
       <Header title="CALENDAR" subtitle="Full Calendar Iteractive Page" />
-      <Box display="flex" justifyContent="space-between">
+      <Box p="20px 0 0 0 " display="flex" justifyContent="space-between">
         {/*CALENDAR SIDEBAR*/}
         <Box
           flex="1 1 20%"
@@ -78,13 +81,15 @@ const Calendar = () => {
           p="15px"
           borderRadius="4px"
         >
-          <Typography variant="h5">Events</Typography>
+          <Typography variant="h5" display="flex" alignItems="center">
+            Events
+          </Typography>
           <List>
             {currentEvents.map((event) => (
               <ListItem
                 key={event.id}
                 sx={{
-                  backgroundColor: colors.greenAccent[500],
+                  backgroundColor: colors.modeColor[400],
                   margin: "10px 0",
                   borderRadius: "2px",
                 }}
@@ -108,18 +113,21 @@ const Calendar = () => {
         <Box flex=" 1 1 100%" ml="15px">
           <FullCalendar
             height="75vh"
+            backgroundColor="#000"
             plugins={[
               dayGridPlugin,
               timeGridPlugin,
               interactionPlugin,
               listPlugin,
+              multimonthPlugin,
             ]}
             headerToolbar={{
               left: "prev next today",
               center: "title",
-              right: "dayGridMonth ,timeGridWeek , timeGridDay ,listMonth",
+              right:
+                "dayGridMonth timeGridWeek multimonthYear timeGridDay listMonth",
             }}
-            initialView="dayGridMonth"
+            initialView="multimonthYear"
             editable={true}
             selectable={true}
             selecMirror={true}

@@ -1,4 +1,5 @@
 import { createTheme } from "@mui/material/styles";
+import { light } from "@mui/material/styles/createPalette";
 import { useState, createContext, useMemo } from "react";
 
 // Crear el contexto del modo de color
@@ -7,10 +8,19 @@ export const colorModeContext = createContext();
 // Tokens de colores personalizados para light y dark
 export const tokens = (mode) => ({
 
+
     ...(mode === "dark"
         ? {
+            modeColor: {
+                100: "#A055D3",
+                200: "#8A3BBF",
+                300: "#7327A5",
+                400: "#5C198A",
+                500: "#45106E",
+                600: "#2E084A",
+            },
             gray: {
-                100: "#2f3b5c",
+                100: "#f3f3f3",
                 200: "#c2c2c2",
                 300: "#a3a3a3",
                 400: "#858585",
@@ -20,21 +30,22 @@ export const tokens = (mode) => ({
                 800: "#292929",
                 900: "#141414",
             },
+
             primary: {
-                100: "#2f3b5c",
+                100: "#ffffff",
                 200: "#a1a4ab",
                 300: "#727681",
-                400: "#1F2A40",
+                400: "rgba(27, 24, 24, 0.65)",
                 500: "#141b2d",
-                600: "#17171c",
+                600: "rgba(27, 24, 24, 0.65)",
                 700: "#0c101b",
                 800: "#080b12",
                 900: "#040509",
             },
             greenAccent: {
                 100: "#dbf5ee",
-                200: "#b7ebde",
-                300: "#94e0cd",
+                200: "#bb85eb",
+                300: "#521785",
                 400: "#70d6bd",
                 500: "#4cccac",
                 600: "#3da38a",
@@ -60,14 +71,22 @@ export const tokens = (mode) => ({
                 400: "#868dfb",
                 500: "#6870fa",
                 600: "#535ac8",
-                700: "#3e4396",
+                700: "rgba(83, 91, 200, 0.26)",
                 800: "#2a2d64",
                 900: "#151632",
             },
         }
         : {
+            modeColor: {
+                100: "#70D6BD",
+                200: "#4CCCAC",
+                300: "#3DA38A",
+                400: "#2E7A67",
+                500: "#1E5245",
+                600: "#0F2922",
+            },
             gray: {
-                100: "#2f3b5c",
+                100: "#f3f3f3",
                 200: "#292929",
                 300: "#3d3d3d",
                 400: "#525252",
@@ -81,9 +100,9 @@ export const tokens = (mode) => ({
                 100: "#040509",
                 200: "#080b12",
                 300: "#0c101b",
-                400: "#f2f0f0",
+                400: "rgb(100, 98,98,0.8)",
                 500: "#141b2d",
-                600: "#434957",
+                600: "rgb(100, 98,98,0.8)",
                 700: "#727681",
                 800: "#a1a4ab",
                 900: "#d0d1d5",
@@ -91,7 +110,7 @@ export const tokens = (mode) => ({
             greenAccent: {
                 100: "#0f2922",
                 200: "#1e5245",
-                300: "#2e7a67",
+                300: "#b7ebde",
                 400: "#3da38a",
                 500: "#4cccac",
                 600: "#70d6bd",
@@ -117,7 +136,7 @@ export const tokens = (mode) => ({
                 400: "#535ac8",
                 500: "#6870fa",
                 600: "#868dfb",
-                700: "#a4a9fc",
+                700: "#3da38a",
                 800: "#c3c6fd",
                 900: "#e1e2fe",
             },
@@ -146,6 +165,10 @@ export const themeSettings = (mode) => {
                     },
                     background: {
                         default: colors.primary[500]
+                    },
+                    text: {
+                        primary: "#ffffff", // El texto siempre será blanco
+                        secondary: "#ffffff", // También los textos secundarios serán blancos
                     }
                 }
                 : {
@@ -163,37 +186,118 @@ export const themeSettings = (mode) => {
                     background: {
                         default: "#fcfcfc",
                     },
+                    text: {
+                        primary: "#ffffff", // El texto siempre será blanco
+                        secondary: "#ffffff", // También los textos secundarios serán blancos
+                    }
                 })
         },
         typography: {
-            fontFamily: ["Source Sans Pro", "sans-serif"].join(","),
+            fontFamily: ["  Poppins", "sans-serif"].join(","),
             fontSize: 12,
             h1: {
-                fontFamily: ["Source Sans Pro", "sans-serif"].join(","),
+                fontFamily: [" Poppins", "sans-serif"].join(","),
                 fontSize: 40,
             },
             h2: {
-                fontFamily: ["Source Sans Pro", "sans-serif"].join(","),
+                fontFamily: ["Poppins", "sans-serif"].join(","),
                 fontSize: 32,
             },
             h3: {
-                fontFamily: ["Source Sans Pro", "sans-serif"].join(","),
+                fontFamily: ["Poppins", "sans-serif"].join(","),
                 fontSize: 24,
             },
             h4: {
-                fontFamily: ["Source Sans Pro", "sans-serif"].join(","),
+                fontFamily: ["Poppins", "sans-serif"].join(","),
                 fontSize: 20,
             },
             h5: {
-                fontFamily: ["Source Sans Pro", "sans-serif"].join(","),
-                fontSize: 16,
+                fontFamily: ["Poppins", "sans-serif"].join(","),
+                fontSize: 28,
             },
             h6: {
-                fontFamily: ["Source Sans Pro", "sans-serif"].join(","),
-                fontSize: 14,
+                fontFamily: ["Poppins", "sans-serif"].join(","),
+                fontSize: 15,
+            },
+        },
+        components: {
+            MuiSvgIcon: {
+                styleOverrides: {
+                    root: {
+                        color: "#ffffff", // Aquí forzamos que todos los iconos sean blancos
+                    },
+                },
             },
         },
 
+        custom: {
+            fondo: "#ffffff",
+            texto: {
+                fontSize: 11,
+                fill: "#333333",
+                borderWidth: 0,
+                outlineColor: "transparent",
+            },
+            eje: {
+                dominio: {
+                    line: {
+                        stroke: "#777777",
+                        strokeWidth: 1,
+                    },
+                },
+                leyenda: {
+                    texto: {
+                        fontSize: 12,
+                        fill: "#333333",
+                        borderWidth: 0,
+                        outlineColor: "transparent",
+                    },
+                },
+                garrapatas: {
+                    line: {
+                        stroke: "#777777",
+                        strokeWidth: 1,
+                    },
+                    texto: {
+                        fontSize: 11,
+                        fill: "#333333",
+                        borderWidth: 0,
+                        outlineColor: "transparent",
+                    },
+                },
+            },
+            red: {
+                line: {
+                    stroke: "#dddddd",
+                    strokeWidth: 1,
+                },
+            },
+            leyendas: {
+                titulo: {
+                    texto: {
+                        fontSize: 11,
+                        fill: "#333333",
+                        borderWidth: 0,
+                        outlineColor: "transparent",
+                    },
+                },
+                texto: {
+                    fontSize: 11,
+                    fill: "#333333",
+                    borderWidth: 0,
+                    outlineColor: "transparent",
+                },
+            },
+            anotaciones: {
+                texto: {
+                    fontSize: 13,
+                    fill: "#333333",
+                    borderWidth: 2,
+                    borderColor: "#ffffff",
+                    borderOpacity: 1,
+                },
+            },
+        },
     };
 };
 export const useMode = () => {

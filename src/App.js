@@ -10,6 +10,13 @@ import Contacts from "./scenes/contacts/Contact";
 import Invoices from "./scenes/invoices/Invoices"
 import Form from "./scenes/form/form"
 import Calendar from "./scenes/calendar/Calendar";
+import FAQ from "./scenes/FAQ/Faq";
+import Bar from "./scenes/bar/Bar";
+import Pie from "./scenes/pie/Pie";
+import Line from "./scenes/line/Line";
+import Geography from "./scenes/geography/Geography";
+import { Height } from "@mui/icons-material";
+
 
 
 function App() {
@@ -18,9 +25,8 @@ function App() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
   const backgroundGradient = mode === "dark"
-    ? "linear-gradient( 111.4deg,  #17171c 6.5%, rgb(17, 15, 80) 50.2% );radial-gradient( circle 382px at 50% 50.2%,  rgb(47, 64, 174) 0.1%, #030132 100.2% );"
-    : "radial-gradient( circle farthest-corner at 10% 20%,  rgba(176,229,208,1) 42%, rgba(92,202,238,0.41) 93.6% );"; // gradiente claro
-
+    ? "background: rgb(119, 119, 119); background: linear-gradient(315deg, rgba(0,0,0,1) 54%, rgba(82,23,133,1) 100%); background-repeat: no-repeat; background-size: cover;"
+    : "background: rgb(255, 255, 255); background: linear-gradient(315deg, rgba(113, 113, 113, 0.84) 54%, #61CDBB 100%); background-repeat: no-repeat; background-size: cover;";
 
   return (
     <colorModeContext.Provider value={colorMode}>
@@ -30,7 +36,7 @@ function App() {
           <GlobalStyles
             styles={{
               body: {
-                background: backgroundGradient,  // Aplicar gradiente dinámico
+                background: backgroundGradient,
                 minHeight: "100vh",
                 margin: 0,
                 padding: 0,
@@ -48,8 +54,11 @@ function App() {
                 <Route path="invoices" element={<Invoices />} />
                 <Route path="form" element={<Form />} />
                 <Route path="calendar" element={<Calendar />} />
-
-
+                <Route path="faq" element={<FAQ />} />
+                <Route path="bar" element={<Bar />} />
+                <Route path="pie" element={<Pie />} />
+                <Route path="line" element={<Line />} />
+                <Route path="geography" element={<Geography />} />
               </Routes>
             </main>
           </div>

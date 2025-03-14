@@ -10,6 +10,7 @@ import {
   Divider,
   useTheme,
   Box,
+  SvgIcon,
 } from "@mui/material";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import PeopleOutlinedIcon from "@mui/icons-material/PeopleOutlined";
@@ -22,54 +23,82 @@ import BarChartOutlinedIcon from "@mui/icons-material/BarChartOutlined";
 import PieChartOutlineOutlinedIcon from "@mui/icons-material/PieChartOutlineOutlined";
 import TimelineOutlinedIcon from "@mui/icons-material/TimelineOutlined";
 import MapOutlinedIcon from "@mui/icons-material/MapOutlined";
-import MenuIcon from "@mui/icons-material/Menu";
+import MenuOpenIcon from "@mui/icons-material/MenuOpen";
 import { styled } from "@mui/material/styles";
 import { Link } from "react-router-dom";
 import { tokens } from "../../theme";
 
-const drawerWidth = 300;
+const drawerWidth = 250;
+
+const IconWrapper = ({ children }) => {
+  return (
+    <ListItemIcon
+      sx={{
+        display: "flex",
+        justifyContent: "space-around",
+        padding: "8px 16px",
+      }}
+    >
+      {children}
+    </ListItemIcon>
+  );
+};
+
+const drawerPaperStyles = (theme, colors) => ({
+  backdropFilter: "blur(25px)",
+  borderRadius: "0 15px 15px 0",
+  transition: "0.3s ease-in-out",
+
+  backgroundColor:
+    theme.palette.mode === "dark" ? colors.primary[600] : colors.primary[600],
+});
 
 const MiniDrawer = styled(Drawer, {
   shouldForwardProp: (prop) => prop !== "open",
 })(({ theme, open }) => {
-  const colors = tokens(theme.palette.mode); // Accedes a colors dentro de esta función
-
   return {
-    width: open ? drawerWidth : 56,
+    width: open ? drawerWidth : 70,
     flexShrink: 0,
     whiteSpace: "nowrap",
     boxSizing: "border-box",
-    transition: "0.3s ease-in-out", // 🔥 Transición general
+    transition: "0.3s ease-in-out",
+    // 🔥 Transición general
 
-    "& .MuiDrawer-paper": {
-      transition: "0.3s ease-in-out", // 🔥 Transición también en el Drawer
-      backgroundColor:
-        theme.palette.mode === "dark"
-          ? colors.primary[600]
-          : colors.primary[400],
+    "& .MuiDrawer-paper": drawerPaperStyles(theme, tokens(theme.palette.mode)),
+    display: "flex",
+    flexDirection: "column",
+    overflowY: "auto",
+
+    "& .MuiDrawer-paper::-webkit-scrollbar": {
+      width: "10px",
+    },
+    "& .MuiDrawer-paper::-webkit-scrollbar-thumb": {
+      backgroundColor: theme.palette.mode === "dark" ? "#A055D3" : "#70D6BD",
+      borderRadius: "4px",
+    },
+    "& .MuiDrawer-paper::-webkit-scrollbar-thumb:hover": {
+      backgroundColor: theme.palette.mode === "dark" ? "#753e9a" : "#60b7a1",
+    },
+
+    "& .css-1ygvgru-MuiListItemIcon-root": {
+      display: "flex",
+      justifyContent: "space-around",
+      padding: "8px 16px",
     },
 
     ...(open && {
       ...theme.mixins.drawer,
-      "& .MuiDrawer-paper": {
-        width: drawerWidth,
-        transition: "0.3s ease-in-out",
-        backgroundColor:
-          theme.palette.mode === "dark"
-            ? colors.primary[600]
-            : colors.primary[400], // 🔥 Mantiene la transición en apertura
-      },
+      "& .MuiDrawer-paper": drawerPaperStyles(
+        theme,
+        tokens(theme.palette.mode)
+      ),
     }),
 
     ...(!open && {
-      "& .MuiDrawer-paper": {
-        width: 56,
-        transition: "0.3s ease-in-out",
-        backgroundColor:
-          theme.palette.mode === "dark"
-            ? colors.primary[600]
-            : colors.primary[400], // 🔥 Mantiene la transición en cierre
-      },
+      "& .MuiDrawer-paper": drawerPaperStyles(
+        theme,
+        tokens(theme.palette.mode)
+      ),
     }),
   };
 });
@@ -77,16 +106,33 @@ const MiniDrawer = styled(Drawer, {
 const Sidebar = ({ isOpen, setIsOpen }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+
   return (
     <MiniDrawer variant="permanent" open={isOpen}>
-      <Toolbar>
+      <Toolbar
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          padding: " 0 30px 0 30px",
+        }}
+      >
+        <img
+          src="/assets/logo_adm.png"
+          style={{ width: "25px", display: !isOpen ? "none" : "block" }}
+        />
         <IconButton onClick={() => setIsOpen(!isOpen)}>
-          <MenuIcon />
+          <MenuOpenIcon sx={{ width: 30 }} />
         </IconButton>
       </Toolbar>
       <Divider />
       {isOpen && (
-        <Box display="flex" justifyContent="center" alignItems="center">
+        <Box
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+          padding="20px 0 20px 0"
+        >
           <Box
             display="grid"
             justifyContent="center"
@@ -97,7 +143,7 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
               alt="profile-user"
               width="100px"
               height="100px"
-              src={`../../assets/user.jpg`}
+              src={"/assets/user.jpg"}
               style={{
                 cursor: "pointer",
                 borderRadius: "50%",
@@ -109,7 +155,7 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
             <Typography variant="h2" fontWeight="bold">
               Roh
             </Typography>
-            <Typography variant="h5">VP Admin</Typography>
+            <Typography variant="h6">VP Admin</Typography>
           </Box>
         </Box>
       )}
@@ -117,16 +163,16 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
       <List>
         <Box paddingLeft={isOpen ? "1%" : undefined}>
           <ListItem button component={Link} to="/">
-            <ListItemIcon>
+            <IconWrapper>
               <HomeOutlinedIcon />
-            </ListItemIcon>
+            </IconWrapper>
             {isOpen && (
               <ListItemText
                 primary="Dashboard"
                 title="Dashboard"
                 primaryTypographyProps={{
-                  variant: "h5",
-                  color: colors.gray[200],
+                  variant: "h6",
+                  color: colors.gray[100],
                 }}
               />
             )}
@@ -134,53 +180,53 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
 
           <Typography
             variant="h6"
-            sx={{ m: "5px 5px ", color: colors.gray[100] }}
+            sx={{ m: "5px 5px ", p: "0 0 0 16px", color: colors.gray[100] }}
           >
             Datas
           </Typography>
           <ListItem button component={Link} to="/team">
-            <ListItemIcon>
+            <IconWrapper>
               <PeopleOutlinedIcon />
-            </ListItemIcon>
+            </IconWrapper>
             {isOpen && (
               <ListItemText
                 primary="Manage Team"
                 title="Manage Team"
                 primaryTypographyProps={{
-                  variant: "h5",
-                  color: colors.gray[200],
+                  variant: "h6",
+                  color: colors.gray[100],
                 }}
               />
             )}
           </ListItem>
 
           <ListItem button component={Link} to="/contacts">
-            <ListItemIcon>
+            <IconWrapper>
               <ContactsOutlinedIcon />
-            </ListItemIcon>
+            </IconWrapper>
             {isOpen && (
               <ListItemText
                 primary="Contacts Information"
                 title="Contacts Information"
                 primaryTypographyProps={{
-                  variant: "h5",
-                  color: colors.gray[200],
+                  variant: "h6",
+                  color: colors.gray[100],
                 }}
               />
             )}
           </ListItem>
 
           <ListItem button component={Link} to="/invoices">
-            <ListItemIcon>
+            <IconWrapper>
               <ReceiptOutlinedIcon />
-            </ListItemIcon>
+            </IconWrapper>
             {isOpen && (
               <ListItemText
                 primary="Invoices Balances"
                 title="Invoices Balance"
                 primaryTypographyProps={{
-                  variant: "h5",
-                  color: colors.gray[200],
+                  variant: "h6",
+                  color: colors.gray[100],
                 }}
               />
             )}
@@ -188,53 +234,53 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
 
           <Typography
             variant="h6"
-            sx={{ m: "5px 5px ", color: colors.gray[100] }}
+            sx={{ m: "5px 5px ", p: "0 0 0 16px", color: colors.gray[100] }}
           >
             Pages
           </Typography>
           <ListItem button component={Link} to="/form">
-            <ListItemIcon>
+            <IconWrapper>
               <PersonOutlinedIcon />
-            </ListItemIcon>
+            </IconWrapper>
             {isOpen && (
               <ListItemText
                 primary="Profile Form"
                 title="Perfile form"
                 primaryTypographyProps={{
-                  variant: "h5",
-                  color: colors.gray[200],
+                  variant: "h6",
+                  color: colors.gray[100],
                 }}
               />
             )}
           </ListItem>
 
           <ListItem button component={Link} to="/calendar">
-            <ListItemIcon>
+            <IconWrapper>
               <CalendarTodayOutlinedIcon />
-            </ListItemIcon>
+            </IconWrapper>
             {isOpen && (
               <ListItemText
                 primary="Calendar"
                 title="Calendar"
                 primaryTypographyProps={{
-                  variant: "h5",
-                  color: colors.gray[200],
+                  variant: "h6",
+                  color: colors.gray[100],
                 }}
               />
             )}
           </ListItem>
 
           <ListItem button component={Link} to="/faq">
-            <ListItemIcon>
+            <IconWrapper>
               <HelpOutlineOutlinedIcon />
-            </ListItemIcon>
+            </IconWrapper>
             {isOpen && (
               <ListItemText
                 primary="FAQ Page"
                 title="FAQ page"
                 primaryTypographyProps={{
-                  variant: "h5",
-                  color: colors.gray[200],
+                  variant: "h6",
+                  color: colors.gray[100],
                 }}
               />
             )}
@@ -242,69 +288,69 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
 
           <Typography
             variant="h6"
-            sx={{ m: "5px 5px ", color: colors.gray[100] }}
+            sx={{ m: "5px 5px ", p: "0 0 0 16px", color: colors.gray[100] }}
           >
             Charts
           </Typography>
           <ListItem button component={Link} to="/bar">
-            <ListItemIcon>
+            <IconWrapper>
               <BarChartOutlinedIcon />
-            </ListItemIcon>
+            </IconWrapper>
             {isOpen && (
               <ListItemText
                 primary="Bar Chart"
                 title="Bar Chart"
                 primaryTypographyProps={{
-                  variant: "h5",
-                  color: colors.gray[200],
+                  variant: "h6",
+                  color: colors.gray[100],
                 }}
               />
             )}
           </ListItem>
 
           <ListItem button component={Link} to="/pie">
-            <ListItemIcon>
+            <IconWrapper>
               <PieChartOutlineOutlinedIcon />
-            </ListItemIcon>
+            </IconWrapper>
             {isOpen && (
               <ListItemText
                 primary="Pie Chart"
                 title="Pie Chart"
                 primaryTypographyProps={{
-                  variant: "h5",
-                  color: colors.gray[200],
+                  variant: "h6",
+                  color: colors.gray[100],
                 }}
               />
             )}
           </ListItem>
 
           <ListItem button component={Link} to="/line">
-            <ListItemIcon>
+            <IconWrapper>
               <TimelineOutlinedIcon />
-            </ListItemIcon>
+            </IconWrapper>
             {isOpen && (
               <ListItemText
                 primary="Line Chart"
                 title="Line Chart"
                 primaryTypographyProps={{
-                  variant: "h5",
-                  color: colors.gray[200],
+                  variant: "h6",
+                  color: colors.gray[100],
                 }}
               />
             )}
           </ListItem>
 
           <ListItem button component={Link} to="/geography">
-            <ListItemIcon>
+            <IconWrapper>
               <MapOutlinedIcon />
-            </ListItemIcon>
+            </IconWrapper>
             {isOpen && (
               <ListItemText
                 primary="Geography Chart"
                 title="Geography Chart"
                 primaryTypographyProps={{
-                  variant: "h5",
-                  color: colors.gray[200],
+                  variant: "h6",
+                  color: colors.gray[100],
                 }}
               />
             )}
